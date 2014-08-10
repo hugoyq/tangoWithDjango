@@ -1,4 +1,4 @@
 tangoWithDjango
 ===============
 
-sample project to learn django
+sample project to learn django using http://www.tangowithdjango.com/
