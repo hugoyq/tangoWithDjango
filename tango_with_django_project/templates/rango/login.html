@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+
+{% load static %}
+
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Rango</title>
+</head>
+<body>
+    <h1>
+        <img src="{% static "rango.jpg" %}" alt="Picture of Rango" height="50"/>
+        Login to Rango
+    </h1>
+
+    <form id="login_form" method="post" action="/rango/login/">
+       {% csrf_token %}
+
+       Username: <input type="text" name="username" value="" size="50" /> <br />
+       Password: <input type="password" name="password" value="" size="50" /><br />
+
+       <input type="submit" value="Login" />
+    </form>
+
+</body>
+</html>

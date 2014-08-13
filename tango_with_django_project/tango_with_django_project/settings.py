@@ -6,6 +6,8 @@ PROJECT_PATH = os.path.abspath(PROJECT_PATH)
 TEMPLATE_PATH = os.path.join(PROJECT_PATH, 'templates')
 DATABASE_PATH = os.path.join(PROJECT_PATH, 'rango.db')
 
+LOGIN_URL = '/rango/login/'
+
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
