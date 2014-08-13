@@ -1,19 +1,9 @@
-<!DOCTYPE html>
+{% extends 'rango/base.html' %}
 
-{% load static %}
+{% block title %}{{ category_name }}{% endblock %}
 
-<html>
-
-    <head>
-        <title>Rango</title>
-    </head>
-
-    <body>
-        <h1>
-            <img src="{% static "rango.jpg" %}" alt="Picture of Rango" height="50"/>
-            Add a Page
-        </h1>
-
+{% block body_block %}
+          <h2>Add a Page</h2>
         <form id="page_form" method="post" action="/rango/category/{{ category_name_url }}/add_page/">
 
             {% csrf_token %}
@@ -28,9 +18,4 @@
             {% endfor %}
             <input type="submit" name="submit" value="Create Page" />
         </form>
-
-        <a href="/rango/about/">About</a><br />
-
-    </body>
-
-</html>
+{% endblock %}

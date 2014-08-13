@@ -6,6 +6,11 @@ PROJECT_PATH = os.path.abspath(PROJECT_PATH)
 TEMPLATE_PATH = os.path.join(PROJECT_PATH, 'templates')
 DATABASE_PATH = os.path.join(PROJECT_PATH, 'rango.db')
 
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+SESSION_COOKIE_AGE = 60*5 #seconds
+
+SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+
 LOGIN_URL = '/rango/login/'
 
 DEBUG = True

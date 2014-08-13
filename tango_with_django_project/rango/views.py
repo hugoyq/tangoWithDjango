@@ -5,6 +5,7 @@ from django.shortcuts import render_to_response
 from rango.models import Category, Page
 from rango.forms import CategoryForm, PageForm, UserForm, UserProfileForm
 from django.contrib.auth import authenticate, login, logout
+from datetime import datetime
 
 def index(request):
     context = RequestContext(request)
@@ -16,8 +17,23 @@ def index(request):
 
     pages = Page.objects.order_by('-views')[:5]
     context_dict['pages'] = pages
+    response = render_to_response('rango/index.html', context_dict, context)
 
-    return render_to_response('rango/index.html', context_dict, context)
+    if request.session.get('last_visit'):
+
+        last_visit_time = request.session.get('last_visit')
+        visits = request.session.get('visits', 0)
+        format = "%Y-%m-%d %H:%M:%S"
+        last_visit_time_str = datetime.strptime(last_visit_time[:-7], format)
+
+        if(datetime.now() - last_visit_time_str).seconds > 0:
+            request.session['visits'] = visits + 1
+            request.session['last_visit'] = str(datetime.now())
+    else:
+        request.session['last_visit'] = str(datetime.now())
+        request.session['visits'] = 1
+
+    return response
 
 
 def category(request, category_name_url):
@@ -66,10 +82,10 @@ def add_page(request, category_name_url):
             page = form.save(commit=False)
 
             try:
-                cat = Category.objects.get(name = category_name)
+                cat = Category.objects.get(name=category_name)
                 page.category = cat
             except Category.DoesNotExist:
-                return render_to_response('rango/add_category.html',{}, context)
+                return render_to_response('rango/add_category.html', {}, context)
 
             page.views = 0
 
@@ -146,14 +162,17 @@ def user_login(request):
     else:
         return render_to_response('rango/login.html', {}, context)
 
+
 @login_required
 def restricted(request):
     return HttpResponse("You are login in")
+
 
 @login_required
 def user_logout(request):
     logout(request)
     return HttpResponseRedirect('/rango/')
+
 
 def about(request):
     context = RequestContext(request)
