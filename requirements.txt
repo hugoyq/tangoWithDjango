@@ -1,4 +1,4 @@
-Django==1.5.4
+Django==1.11.29
 Landscape-Client==14.01
 PAM==0.4.2
 Pillow==2.3.0
